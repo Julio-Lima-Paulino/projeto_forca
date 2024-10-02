@@ -3,10 +3,9 @@ from tkinter import messagebox
 import tkinter.font as tkFont
 
 
-# Função para configurar a palavra secreta
 def configurar_palavra_secreta(event=None):
     global palavra_secreta
-    palavra_secreta = entry_palavra_secreta.get().upper()  # Maiúsculas
+    palavra_secreta = entry_palavra_secreta.get().upper()  
 
     if not palavra_secreta.isalpha():
         messagebox.showwarning("Erro", "A palavra deve conter apenas letras.")
@@ -17,16 +16,15 @@ def configurar_palavra_secreta(event=None):
     iniciar_jogo()
 
 
-# Função para iniciar o jogo
 def iniciar_jogo():
     global letras_adivinhadas, tentativas_restantes, letras_erradas
     letras_adivinhadas = ["_" for _ in palavra_secreta]
     tentativas_restantes = 6
     letras_erradas = []
 
-    # Limpar e atualizar o Canvas
+    
     canvas.delete("all")
-    desenhar_forca_estrutura()  # Desenhar a estrutura da forca inicialmente
+    desenhar_forca_estrutura()  
     desenhar_forca(0)
     atualizar_palavra_mostrada()
     atualizar_interface()
@@ -34,10 +32,10 @@ def iniciar_jogo():
     mostrar_tela_jogo()
 
 
-# Função para adivinhar uma letra
+
 def adivinhar(event=None):
     global tentativas_restantes
-    letra = entry_letra.get().upper()  # Maiúsculas
+    letra = entry_letra.get().upper()  
     entry_letra.delete(0, tk.END)
 
     if len(letra) != 1 or not letra.isalpha():
@@ -68,74 +66,71 @@ def adivinhar(event=None):
         mostrar_tela_configurar_palavra()
 
 
-# Função para desenhar a forca e o boneco (começando pela cabeça)
 def desenhar_forca(estagio):
-    if estagio >= 1:  # Cabeça
+    if estagio >= 1:  
         canvas.create_oval(180, 100, 220, 140, width=4)
-    if estagio >= 2:  # Corpo
+    if estagio >= 2:  
         canvas.create_line(200, 140, 200, 200, width=4)
-    if estagio >= 3:  # Braço esquerdo
+    if estagio >= 3:  
         canvas.create_line(200, 160, 170, 180, width=4)
-    if estagio >= 4:  # Braço direito
+    if estagio >= 4:  
         canvas.create_line(200, 160, 230, 180, width=4)
-    if estagio >= 5:  # Perna esquerda
+    if estagio >= 5:  
         canvas.create_line(200, 200, 180, 230, width=4)
-    if estagio >= 6:  # Perna direita
+    if estagio >= 6:  
         canvas.create_line(200, 200, 220, 230, width=4)
 
 
-# Função para desenhar a estrutura da forca
+
 def desenhar_forca_estrutura():
     # Base e estrutura da forca
-    canvas.create_line(100, 250, 250, 250, width=4)  # Base
-    canvas.create_line(150, 250, 150, 50, width=4)  # Poste
-    canvas.create_line(150, 50, 200, 50, width=4)  # Viga superior
-    canvas.create_line(200, 50, 200, 80, width=4)  # Corda
+    canvas.create_line(100, 250, 250, 250, width=4)  
+    canvas.create_line(150, 250, 150, 50, width=4)  
+    canvas.create_line(150, 50, 200, 50, width=4)  
+    canvas.create_line(200, 50, 200, 80, width=4)  
 
 
-# Função para atualizar a palavra mostrada
+
 def atualizar_palavra_mostrada():
     label_palavra.config(text=" ".join(letras_adivinhadas))
 
 
-# Função para atualizar os textos da interface
 def atualizar_interface():
     label_tentativas.config(text=f"Tentativas restantes: {tentativas_restantes}")
     label_letras_erradas.config(text=f"Letras erradas: {' '.join(letras_erradas)}")
 
 
-# Função para mostrar a tela de configuração da palavra secreta
+
 def mostrar_tela_configurar_palavra():
     frame_jogo.pack_forget()
     frame_configurar_palavra.pack()
 
-    # Alterar o bind do Enter para configurar a palavra
+    
     root.unbind('<Return>')
     root.bind('<Return>', configurar_palavra_secreta)
 
 
-# Função para esconder a tela de configuração e mostrar a tela do jogo
 def esconder_tela_configurar_palavra():
     frame_configurar_palavra.pack_forget()
     frame_jogo.pack()
 
-    # Alterar o bind do Enter para adivinhar letras
+    
     root.unbind('<Return>')
     root.bind('<Return>', adivinhar)
 
 
-# Função para mostrar a tela do jogo
+
 def mostrar_tela_jogo():
     frame_jogo.pack()
 
 
-# Configuração da janela principal
+
 root = tk.Tk()
 root.geometry("600x650")
 root.title("Jogo de Forca")
 root.configure(bg='#F0F8FF')
 
-# Tela para o usuário 1 escolher a palavra secreta
+
 frame_configurar_palavra = tk.Frame(root, padx=20, pady=20, bg='#F0F8FF')
 frame_configurar_palavra.pack(expand=True)
 
@@ -154,7 +149,7 @@ button_confirmar_palavra = tk.Button(frame_configurar_palavra, text="Confirmar",
                                      command=configurar_palavra_secreta)
 button_confirmar_palavra.pack(pady=10)
 
-# Tela para o usuário 2 jogar
+
 frame_jogo = tk.Frame(root, padx=20, pady=20, bg='#FFF5EE')
 
 label_titulo_jogo = tk.Label(frame_jogo, text="Jogo de Forca", font=("Helvetica", 24, "bold"), fg="green", bg='#FFF5EE')
@@ -175,9 +170,9 @@ label_letras_erradas.pack(pady=10)
 
 entry_letra = tk.Entry(frame_jogo, font=("Helvetica", 14), justify='center')
 entry_letra.pack(pady=10)
-entry_letra.focus_set()  # Foco automático na entrada
+entry_letra.focus_set() 
 
-# Canvas para desenhar a forca e o boneco
+
 canvas = tk.Canvas(frame_jogo, width=300, height=300, bg='#FFF5EE')
 canvas.pack()
 
