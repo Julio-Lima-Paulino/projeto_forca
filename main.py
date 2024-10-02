@@ -176,5 +176,5 @@ entry_letra.focus_set()
 canvas = tk.Canvas(frame_jogo, width=300, height=300, bg='#FFF5EE')
 canvas.pack()
 
-# Iniciar o loop principal da interface
+
 root.mainloop()
